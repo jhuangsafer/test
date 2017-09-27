@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.safer</groupId>
+	<artifactId>SAFEROne</artifactId>
+	<version>1.3.1</version>
+	<packaging>war</packaging>
+
+	<name>SAFEROne</name>
+	<description>SAFER One project</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>com.safer.Application</start-class>
+		<java.version>1.8</java.version>
+		<gwt.sourcelevel>1.7</gwt.sourcelevel>
+		<guava.version>18.0</guava.version>
+		<gwt.version>2.7.0</gwt.version>
+		<asm.version>5.0.3</asm.version>
+		<gxt.version>4.0.1</gxt.version>
+		<javaservlet.version>3.1.0</javaservlet.version>
+		<gwteventbinder.version>1.1.0</gwteventbinder.version>
+		<orika.version>1.4.6</orika.version>
+		<spring-data-releasetrain.version>Fowler-RELEASE</spring-data-releasetrain.version>
+		<!--   <spring.version>4.2.6.RELEASE</spring.version> -->
+	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.0.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<repositories>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>OSGEO GeoTools repo</id>
+			<url>http://download.osgeo.org/webdav/geotools</url>
+		</repository>
+		<repository>
+			<id>Hibernate Spatial repo</id>
+			<url>http://www.hibernatespatial.org/repository</url>
+		</repository>
+		<repository>
+			<id>spring-releases</id>
+			<name>Spring Releases</name>
+			<url>http://repo.spring.io/release</url>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>http://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<!-- ~/.m2/settings.xml add <server/> with the support portal credentials -->
+			<id>sencha-gxt-repository</id>
+			<name>Sencha GXT Repository</name>
+
+			<!-- Commercial (with Support) -->
+			<!-- <url>https://maven.sencha.com/repo/gxt-commercial-release</url> -->
+			<url>https://maven.sencha.com/repo/gxt-support-commercial-release</url>
+			<!-- <url>https://maven.sencha.com/repo/gxt-commercial-snapshot</url> -->
+
+			<!-- GPL -->
+			<!-- <url>https://maven.sencha.com/repo/gxt-gpl-release</url> -->
+			<!-- <url>https://maven.sencha.com/repo/gxt-gpl-snapshot</url> -->
+
+			<!-- GPL with Support -->
+			<!-- <url>https://maven.sencha.com/repo/gxt-support-gpl-release</url> -->
+
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<url>http://repo.spring.io/snapshot</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<url>http://repo.spring.io/milestone</url>
+		</pluginRepository>
+	</pluginRepositories>
+	<dependencies>
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>${orika.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm</artifactId>
+			<version>${asm.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.sanselan</groupId>
+			<artifactId>sanselan</artifactId>
+			<version>0.97-incubator</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.branflake2267</groupId>
+			<artifactId>gwt-maps-api</artifactId>
+			<version>3.10.0-alpha-7</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.gwt</groupId>
+					<artifactId>gwt-user</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.gwt</groupId>
+					<artifactId>gwt-servlet</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.gwt</groupId>
+					<artifactId>gwt-dev</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core</artifactId>
+			<version>2.0.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-solr</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.10.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-spatial</artifactId>
+			<version>4.3</version>
+		</dependency>
+		
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jersey</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.jersey.ext</groupId>
+					<artifactId>jersey-bean-validation</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.validation</groupId>
+					<artifactId>validation-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>bean-validator</artifactId>
+					<groupId>org.glassfish.hk2.external</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javaservlet.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- gwt comes JSR 303 which is incompatible with higher hibernate validation versions -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.1.0.Final</version>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwt.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt.eventbinder</groupId>
+			<artifactId>eventbinder</artifactId>
+			<version>${gwteventbinder.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sencha.gxt</groupId>
+			<artifactId>gxt</artifactId>
+			<version>${gxt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sencha.gxt</groupId>
+			<artifactId>gxt-chart</artifactId>
+			<version>${gxt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sencha.gxt</groupId>
+			<artifactId>gxt-theme-neptune</artifactId>
+			<version>${gxt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-codeserver</artifactId>
+			<version>${gwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.gwtupload</groupId>
+			<artifactId>gwtupload</artifactId>
+			<version>1.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.10</version>
+		</dependency>
+		<dependency>
+			<groupId>ar.com.fdvs</groupId>
+			<artifactId>DynamicJasper</artifactId>
+			<version>3.0.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-legacy</artifactId>
+			<version>1.0.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.maps</groupId>
+			<artifactId>google-maps-services</artifactId>
+			<version>0.1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-ws</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.luckycatlabs</groupId>
+			<artifactId>SunriseSunsetCalculator</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>fr.opensagres.xdocreport.document</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>fr.opensagres.xdocreport.document.docx</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>fr.opensagres.xdocreport.template.freemarker</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>org.apache.poi.xwpf.converter.pdf.itext5</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.allen-sauer.gwt.voices</groupId>
+			<artifactId>gwt-voices</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-integration</artifactId>
+		</dependency>
+
+		<dependency>
+	        <groupId>com.zaxxer</groupId>
+	        <artifactId>HikariCP</artifactId>
+	        <version>2.4.1</version>
+	    </dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-launcher</artifactId>
+			<version>1.9.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>de.micromata.jak</groupId>
+			<artifactId>JavaAPIforKml</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.e175.klaus</groupId>
+		    <artifactId>solarpositioning</artifactId>
+		    <version>0.0.8</version> <!-- or whatever latest release is -->
+		</dependency>
+
+		
+		<dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-web</artifactId>
+    	</dependency>
+	    <dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+	 	</dependency>
+
+	    <dependency>
+	    	<groupId>org.neo4j</groupId>
+	    	<artifactId>neo4j-cypher-compiler-2.1</artifactId>
+	    	<version>2.1.5</version>
+	    </dependency>
+	    <dependency>
+	    	<groupId>org.neo4j</groupId>
+	    	<artifactId>neo4j-cypher-compiler-2.0</artifactId>
+	    	<version>2.0.3</version>
+	    </dependency>
+	    
+	    <dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts</artifactId>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+			<version>1.14-SNAPSHOT</version>
+		</dependency>
+
+
+		<dependency>
+		    <groupId>org.apache.taglibs</groupId>
+		    <artifactId>taglibs-standard-spec</artifactId>
+		    <version>1.2.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.taglibs</groupId>
+		    <artifactId>taglibs-standard-impl</artifactId>
+		    <version>1.2.1</version>
+		</dependency>
+	    <dependency>
+		    <groupId>org.glassfish.jersey.ext</groupId>
+		    <artifactId>jersey-mvc-jsp</artifactId>
+		    <version>2.23.1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.tmatesoft.sqljet</groupId>
+		    <artifactId>sqljet</artifactId>
+		    <version>1.1.10</version>
+		</dependency>
+		
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- <plugin> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-maven-plugin</artifactId> 
+				</plugin> -->
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.18.1</version>
+          <configuration>
+            <includes>
+              <include>**/*Tests.java</include>
+              <include>**/*Test.java</include>
+            </includes>
+            <excludes>
+              <exclude>**/Abstract*.java</exclude>
+            </excludes>
+            <argLine>-Dspring.profiles.active=alpha</argLine>
+          </configuration>
+        </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<value>**/jre/**/*.java</value>
+						<exclude>com/vividsolutions/jtsemul/**/*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<value>**/jre/**/*.java</value>
+						<exclude>com/vividsolutions/jtsemul/**/*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<attachClasses>true</attachClasses>
+					<warSourceExcludes>saferone/**,login/**</warSourceExcludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>${gwt.version}</version>
+				<executions>
+					<execution>
+						<id>gwt.saferone</id>
+						<configuration>
+							<module>com.safer.one.gwt.saferone</module>
+							<sourceLevel>${gwt.sourcelevel}</sourceLevel>
+							<draftCompile>true</draftCompile>
+							<!-- <style>PRETTY</style>  -->
+							<extraJvmArgs>-Xmx2000m</extraJvmArgs>
+							<localWorkers>2</localWorkers>
+							<deploy>${project.build.directory}/gwt-deploy</deploy> 
+						</configuration>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>safer.loginmanager</id>
+						<configuration>
+							<module>com.safer.one.loginmanager.LoginManager</module>
+							<sourceLevel>${gwt.sourcelevel}</sourceLevel>
+							<draftCompile>true</draftCompile>
+							<!--  <style>PRETTY</style>  -->
+							<extraJvmArgs>-Xmx2000m</extraJvmArgs>
+							<localWorkers>2</localWorkers>
+							<deploy>${project.build.directory}/gwt-deploy</deploy>
+						</configuration>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+
+				</executions>
+			</plugin>
+
+			<!-- remote deploy for beta -->
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.4.12</version>
+				<configuration>
+
+					<!-- Container configuration -->
+					<container>
+						<containerId>tomcat8x</containerId>
+						<type>remote</type>
+					</container>
+
+					<!-- Configuration to use with the container -->
+					<configuration>
+						<type>runtime</type>
+						<properties>
+							<cargo.hostname>${tomcat.manager.hostname}</cargo.hostname>
+							<cargo.servlet.port>${tomcat.manager.port}</cargo.servlet.port>
+							<cargo.remote.username>${tomcat.manager.username}</cargo.remote.username>
+							<cargo.remote.password>${tomcat.manager.password}</cargo.remote.password>
+						</properties>
+					</configuration>
+
+					<!-- Deployables configuration -->
+					<deployables>
+						<deployable>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<type>war</type>
+							<properties>
+								<context>/</context>
+							</properties>
+						</deployable>
+					</deployables>
+
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/java/com/safer/one/gwtresources/client/theme/markers/</directory>
+				<filtering>false</filtering>
+				<targetPath>com/safer/one/gwtresources/client/theme/markers/</targetPath>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/version.properties</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>saferone.html</include>
+					<include>login.html</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>saferone.html</exclude>
+					<exclude>login.html</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/version.properties</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+	<scm>
+		<connection>scm:svn:https://godzilla.safersystem.com/svn/SAFEROneJava/trunk</connection>
+		<developerConnection>scm:svn:https://godzilla.safersystem.com/svn/SAFEROneJava/trunk</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://godzilla.safersystem.com/svn/SAFEROneJava/trunk</url>
+	</scm>
+	
+	<profiles>
+		<profile>
+			<id>env-beta</id>
+			<!-- Activated when -Denv=beta is given as parameter. -->
+			<activation>
+				<property>
+					<name>env</name>
+					<value>beta</value>
+				</property>
+			</activation>
+			<properties>
+				<deploy.env>beta</deploy.env>
+				<tomcat.manager.hostname>beta.safersystem.com</tomcat.manager.hostname>
+				<tomcat.manager.port>80</tomcat.manager.port>
+				<tomcat.manager.username>tomcat</tomcat.manager.username>
+				<tomcat.manager.password>Pass4Tomcat</tomcat.manager.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>env-prod</id>
+			<!-- Activated when -Denv=prod is given as parameter. -->
+			<activation>
+				<property>
+					<name>env</name>
+					<value>prod1</value>
+				</property>
+			</activation>
+			<properties>
+				<deploy.env>prod</deploy.env>
+				<tomcat.manager.hostname>52.2.238.3</tomcat.manager.hostname>
+				<tomcat.manager.port>80</tomcat.manager.port>
+				<tomcat.manager.username>tomcat</tomcat.manager.username>
+				<tomcat.manager.password>Pass4Tomcat</tomcat.manager.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>env-prod2</id>
+			<!-- Activated when -Denv=prod is given as parameter. -->
+			<activation>
+				<property>
+					<name>env</name>
+					<value>prod2</value>
+				</property>
+			</activation>
+			<properties>
+				<deploy.env>prod</deploy.env>
+				<tomcat.manager.hostname>52.4.134.5</tomcat.manager.hostname>
+				<tomcat.manager.port>80</tomcat.manager.port>
+				<tomcat.manager.username>tomcat</tomcat.manager.username>
+				<tomcat.manager.password>Pass4Tomcat</tomcat.manager.password>
+			</properties>
+		</profile>
+	</profiles>
+</project>
