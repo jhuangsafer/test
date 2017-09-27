@@ -63,6 +63,8 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.scope.ScopedObject;
@@ -2280,7 +2282,8 @@ public class SaferOneServiceImpl extends MyXsrfProtectedServiceServlet implement
 			unitsManager.toInternal( data.getParticulateIsopleths(), siteId,getCurrentUser().getId());
 
 		}
-		
+		data.setHazmatInfo(Jsoup.clean(data.getHazmatInfo(), Whitelist.basic().addTags("b","i","u").addAttributes("a", "href", "class").addAttributes("font", "color").addAttributes("span", "style") ) );//jsoup
+		data.setNotes(Jsoup.clean(data.getNotes(), Whitelist.basic().addTags("b","i","u").addAttributes("a", "href", "class").addAttributes("font", "color").addAttributes("span", "style") ));//jsoup
 		Chemical chem = chemicalsManager.saveChemicalDetails(data, getCurrentSite());
 		return getChemical(chem.getId(),false, null);
 	}
@@ -3093,7 +3096,9 @@ public class SaferOneServiceImpl extends MyXsrfProtectedServiceServlet implement
 			poi.setSourceType("manual");
 		}
 		poi.setSite(getCurrentUser().getCurrentSite());
+		poi.setNotes(Jsoup.clean(poi.getNotes(), Whitelist.basic().addTags("b","i","u").addAttributes("a", "href", "class").addAttributes("font", "color").addAttributes("span", "style") ));
 		poi = poisManager.save(poi);
+		
 		return mapOrNewInstance(poi, PointOfInterestDTO.class);
 	}
 	
@@ -3225,6 +3230,7 @@ public class SaferOneServiceImpl extends MyXsrfProtectedServiceServlet implement
 		}
 
 		em.setSite(getCurrentUser().getCurrentSite());
+		em.setNotes(Jsoup.clean(em.getNotes(), Whitelist.basic().addTags("b","i","u").addAttributes("a", "href", "class").addAttributes("font", "color").addAttributes("span", "style") ));//jsoup
 
 		em = emissionManager.save(em);
 
